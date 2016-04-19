@@ -294,6 +294,13 @@ class Vanagon
         @component.options[:ref] = the_ref
       end
 
+      # Set up clone args so we can set depth, or other options
+      #
+      # @param clone_args [String] --depth to setup a shallow clone
+      def clone_args(the_clone_args)
+        @component.options[:clone_args] = the_clone_args
+      end
+
       # Set a build dir relative to the source directory.
       #
       # The build dir will be created before the configure block runs and configure/build/install commands will be run

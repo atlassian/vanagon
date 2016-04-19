@@ -5,20 +5,30 @@ class Vanagon
     class Source
       class Git
         include Vanagon::Utilities
-        attr_accessor :url, :ref, :workdir, :version, :cleanup
+        attr_accessor :url, :ref, :workdir, :version, :cleanup, :clone_args
 
         # Constructor for the Git source type
         #
         # @param url [String] url of git repo to use as source
         # @param ref [String] ref to checkout from git repo
         # @param workdir [String] working directory to clone into
-        def initialize(url, ref, workdir)
+        def initialize(url, ref, workdir, clone_args)
           unless ref
             fail "ref parameter is required for the git source"
           end
           @url = url
           @ref = ref
           @workdir = workdir
+          @clone_args = clone_args
+        end
+
+
+        def get_clone_args()
+          unless @clone_args
+            ""
+          else
+            @clone_args
+          end
         end
 
         # Fetch the source. In this case, clone the repository into the workdir
@@ -27,7 +37,7 @@ class Vanagon
         def fetch
           puts "Cloning ref '#{@ref}' from url '#{@url}'"
           Dir.chdir(@workdir) do
-            git("clone #{@url}", true)
+            git("clone #{get_clone_args} #{@url}", true)
             Dir.chdir(dirname) do
               git("checkout #{@ref}", true)
               git("submodule update --init --recursive", true)

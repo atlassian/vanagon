@@ -67,7 +67,7 @@ class Vanagon
                         when /^file/
                           Vanagon::Component::Source::Local.new(self.rewrite(url, 'file'), workdir)
                         when /^git/
-                          Vanagon::Component::Source::Git.new(self.rewrite(url, 'git'), options[:ref], workdir)
+                          Vanagon::Component::Source::Git.new(self.rewrite(url, 'git'), options[:ref], workdir, options[:clone_args])
                         else
                           fail "Don't know how to handle source of type '#{uri_scheme}' from url: '#{url}'"
                         end
