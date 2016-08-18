@@ -128,7 +128,7 @@ class Vanagon
     # @param timeout [Integer] number of seconds to run the block before timing out
     # @return [true] If the block succeeds, true is returned
     # @raise [Vanagon::Error] if the block fails after the retries are exhausted, an error is raised
-    def retry_with_timeout(tries = 5, timeout = 1, &blk)
+    def retry_with_timeout(tries = 30, timeout = 1, &blk)
       error = nil
       tries.times do
         Timeout::timeout(timeout) do
